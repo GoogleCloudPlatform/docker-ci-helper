@@ -1,9 +1,9 @@
 language: python
 
 env:
-  - TRAMPOLINE_BUILD_FILE=tests/python/run_tests.sh
-  - TRAMPOLINE_IMAGE=gcr.io/cloud-devrel-kokoro-resources/docker-ci-helper/python
-  - TRAMPOLINE_DOCKERFILE=docker/python/Dockerfile
+  - TRAMPOLINE_BUILD_FILE=tests/python/run_tests.sh \
+    TRAMPOLINE_IMAGE=gcr.io/cloud-devrel-kokoro-resources/docker-ci-helper/python
+    TRAMPOLINE_DOCKERFILE=docker/python/Dockerfile \
 
 install: skip
 script: ./trampoline_v2.sh
