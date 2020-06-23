@@ -107,8 +107,8 @@ Optional environment variables:
   Defaults to /workspace.
 * `TRAMPOLINE_SKIP_DOWNLOAD_IMAGE`: Skip downloading the image when
   you know you have the image locally.
-
-* `TRAMPOLINE_SERVICE_ACCOUNT`
+* `TRAMPOLINE_SERVICE_ACCOUNT`: A service account json file for
+  authentication.
 
 ## Examples
 
