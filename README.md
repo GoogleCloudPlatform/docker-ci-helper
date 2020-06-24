@@ -1,11 +1,18 @@
 # docker-ci-helper
 
 This repository contains `trampoline_v2.sh`, a shell script for
-running another script in a Docker container. Primary use case of this
-shell script is to use it as a test driver on various CI systems. By
-utilizing Docker, your tests will be very portable so that you can run
-them on any CI systems as well as on your workstations with minimum
-efforts.
+running another script in a Docker container. The primary use case of
+this shell script is to use it as a test driver on various CI
+systems.
+
+You provide a Docker image, a build script. Trampoline V2 will run the
+Docker image, mounting the source files and the build script, then run
+the build script in the Docker container.
+
+This way, your tests are always executed in the same Docker image. It
+will allow you to run the same test in various environments including
+CI systems, as well as your local workstation without worrying about
+the environment difference.
 
 ## trampoline_v2.sh
 
@@ -26,39 +33,38 @@ We'll discuss each steps in detail.
    downloaded Docker image, Trampoline V2 uses the downloaded image as
    a cache.
 
-We recommend you have the Dockerfile in the repo and specify
-`TRAMPOLINE_DOCKERFILE`. This will allow you to create a single pull
-request containing changes in tests as well as changes in the
-Dockerfile.
+We recomnend you have the Dockerfile in the same repository as your
+build file and your tests, then specify `TRAMPOLINE_DOCKERFILE`. This
+will allow you to create a single pull request containing changes in
+tests as well as changes in the Dockerfile.
 
 ### Run Docker with appropriate flags to run the test
 
-* Mounting the source at /workspace
-* Add appropriate environment variables
-* Use invoker's uid and the Docker gid on the host.
-* Runs a command specified by `TRAMPOLINE_BUILD_FILE` environment
-  variable.
+* Trampoline V2 will mount the source at /workspace.
+* Trampoline V2 will add appropriate environment variables.
+* Trampoline V2 will use invoker's uid and the Docker gid on the host.
+* Trampoline V2 will run a command specified by
+  `TRAMPOLINE_BUILD_FILE` environment variable.
 * Trampoline V2 will exit with the same exit code as the build file.
 
 #### Environment variables which will be passed down into the container
 
 The following environment variables are passed down into the container.
 
-* `RUNNING_IN_CI`
-  Tells scripts whether they are running as part of CI or not.
-* `TRAMPOLINE_CI`
-  Indicates which CI system we're in.
-* `TRAMPOLINE_V2`
-  (true|false) Indicates we're running trampoline_v2.
-* `KOKORO_BUILD_NUMBER`
-* `KOKORO_BUILD_ID`
-* `KOKORO_JOB_NAME`
-* `KOKORO_GIT_COMMIT`
-* `KOKORO_GITHUB_COMMIT`
-* `KOKORO_GITHUB_PULL_REQUEST_NUMBER`
-* `KOKORO_GITHUB_PULL_REQUEST_COMMIT`
-* `KOKORO_GITHUB_COMMIT_URL`
-* `KOKORO_GITHUB_PULL_REQUEST_URL`
+| envvar name                        | Description                              |
+| ---------------------------------- | ---------------------------------------- |
+| `RUNNING_IN_CI`                    | Tells scripts whether they are running as part of CI or not. |
+| `TRAMPOLINE_CI`                    | Indicates which CI system we're in.      |
+| `TRAMPOLINE_VERSION`               | Indicates the version of the script.     |
+| `KOKORO_BUILD_NUMBER`              |                                          |
+| `KOKORO_BUILD_ID`                  |                                          |
+| `KOKORO_JOB_NAME`                  |                                          |
+| `KOKORO_GIT_COMMIT`                |                                          |
+| `KOKORO_GITHUB_COMMIT`             |                                          |
+| `KOKORO_GITHUB_PULL_REQUEST_NUMBER`|                                          |
+| `KOKORO_GITHUB_PULL_REQUEST_COMMIT`|                                          |
+| `KOKORO_GITHUB_COMMIT_URL`         |                                          |
+| `KOKORO_GITHUB_PULL_REQUEST_URL`   |                                          |
 
 ### Upload the newly built Docker image
 

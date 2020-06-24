@@ -121,7 +121,7 @@ PROGRAM_DIR="$(dirname "${PROGRAM_PATH}")"
 PROJECT_ROOT="$(repo_root "${PROGRAM_DIR}")"
 
 RUNNING_IN_CI="false"
-TRAMPOLINE_V2="true"
+TRAMPOLINE_VERSION="2.0.0"
 
 # The workspace in the container, defaults to /workspace.
 TRAMPOLINE_WORKSPACE="${TRAMPOLINE_WORKSPACE:-/workspace}"
@@ -171,8 +171,8 @@ pass_down_envvars=(
     "RUNNING_IN_CI"
     # Indicates which CI system we're in.
     "TRAMPOLINE_CI"
-    # Indicates we're running trampoline_v2.
-    "TRAMPOLINE_V2"
+    # Indicates the version of the script.
+    "TRAMPOLINE_VERSION"
     # KOKORO dynamic variables.
     "KOKORO_BUILD_NUMBER"
     "KOKORO_BUILD_ID"
