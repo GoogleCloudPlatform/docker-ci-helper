@@ -40,7 +40,8 @@ tests as well as changes in the Dockerfile.
 
 ### Run Docker with appropriate flags to run the test
 
-* Trampoline V2 will mount the source at /workspace.
+* Trampoline V2 will mount the project source code at /workspace (it
+  assumes the upward closest git root as the project root).
 * Trampoline V2 will add appropriate environment variables.
 * Trampoline V2 will use invoker's uid and the Docker gid on the host.
 * Trampoline V2 will run a command specified by
