@@ -133,7 +133,7 @@ if [[ -n "${KOKORO_BUILD_ID:-}" ]]; then
     # descriptive env var for indicating it's on CI.
     RUNNING_IN_CI="true"
     TRAMPOLINE_CI="kokoro"
-    # We should be able to use the Compute Engine default service account.
+    # We should be able to use the default service account.
     log_yellow "Configuring Container Registry access"
     gcloud auth list
     gcloud auth configure-docker --quiet
