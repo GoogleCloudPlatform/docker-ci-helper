@@ -5,14 +5,14 @@ running another script in a Docker container. The primary use case of
 this shell script is to use it as a test driver on various CI
 systems.
 
-You provide a Docker image, a build script. Trampoline V2 will run the
-Docker image, mounting the source files and the build script, then run
-the build script in the Docker container.
+You provide a Docker image and a build script. Trampoline V2 will run
+the Docker image, mounting the source files and the build script, then
+run the build script in the Docker container.
 
 This way, your tests are always executed in the same Docker image. It
-will allow you to run the same test in various environments including
-CI systems, as well as your local workstation without worrying about
-the environment difference.
+will allow you to run the tests in various environments including any
+CI systems, as well as on your local workstation without worrying
+about installing the test dependencies.
 
 ## trampoline_v2.sh
 
