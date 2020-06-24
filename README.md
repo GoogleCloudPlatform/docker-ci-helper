@@ -120,8 +120,8 @@ Here is a minimum example of the usage.
 $ mkdir tmp
 $ echo '#!/bin/sh' > tmp/hello.sh
 $ echo 'echo "Hello World!"' >> tmp/hello.sh
-chmod +x tmp/hello.sh
-TRAMPOLINE_IMAGE=bash TRAMPOLINE_BUILD_FILE=tmp/hello.sh ./trampoline_v2.sh
+$ chmod +x tmp/hello.sh
+$ TRAMPOLINE_IMAGE=bash TRAMPOLINE_BUILD_FILE=tmp/hello.sh ./trampoline_v2.sh
 ```
 
 If you see "Hello World!", it's working.
