@@ -26,7 +26,7 @@ We'll discuss each steps in detail.
    downloaded Docker image, Trampoline V2 uses the downloaded image as
    a cache.
 
-We recomnend you have the Dockerfile in the repo and specify
+We recommend you have the Dockerfile in the repo and specify
 `TRAMPOLINE_DOCKERFILE`. This will allow you to create a single pull
 request containing changes in tests as well as changes in the
 Dockerfile.
