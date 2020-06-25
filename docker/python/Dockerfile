@@ -36,3 +36,5 @@ RUN apt-get update \
 ENV PYTHON_PIP_VERSION 10.0.1
 RUN wget --no-check-certificate -O /tmp/get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
     && python3 /tmp/get-pip.py
+
+RUN false
