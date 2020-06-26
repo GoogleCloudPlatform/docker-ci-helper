@@ -126,6 +126,16 @@ TRAMPOLINE_VERSION="2.0.0"
 # The workspace in the container, defaults to /workspace.
 TRAMPOLINE_WORKSPACE="${TRAMPOLINE_WORKSPACE:-/workspace}"
 
+pass_down_envvars=(
+    # TRAMPOLINE_V2 variables.
+    # Tells scripts whether they are running as part of CI or not.
+    "RUNNING_IN_CI"
+    # Indicates which CI system we're in.
+    "TRAMPOLINE_CI"
+    # Indicates the version of the script.
+    "TRAMPOLINE_VERSION"
+)
+
 # Detect which CI systems we're in. If we're in any of the CI systems
 # we support, `RUNNING_IN_CI` will be true and `TRAMPOLINE_CI` will be
 # the name of the CI system. Both envvars will be passing down to the
@@ -138,9 +148,41 @@ if [[ -n "${KOKORO_BUILD_ID:-}" ]]; then
     log_yellow "Configuring Container Registry access"
     gcloud auth list
     gcloud auth configure-docker --quiet
+    pass_down_envvars+=(
+	# KOKORO dynamic variables.
+	"KOKORO_BUILD_NUMBER"
+	"KOKORO_BUILD_ID"
+	"KOKORO_JOB_NAME"
+	"KOKORO_GIT_COMMIT"
+	"KOKORO_GITHUB_COMMIT"
+	"KOKORO_GITHUB_PULL_REQUEST_NUMBER"
+	"KOKORO_GITHUB_PULL_REQUEST_COMMIT"
+	# For Build Cop Bot
+	"KOKORO_GITHUB_COMMIT_URL"
+	"KOKORO_GITHUB_PULL_REQUEST_URL"
+    )
 elif [[ "${TRAVIS:-}" == "true" ]]; then
     RUNNING_IN_CI="true"
     TRAMPOLINE_CI="travis"
+    pass_down_envvars+=(
+	"TRAVIS_BRANCH"
+	"TRAVIS_BUILD_ID"
+	"TRAVIS_BUILD_NUMBER"
+	"TRAVIS_BUILD_WEB_URL"
+	"TRAVIS_COMMIT"
+	"TRAVIS_COMMIT_MESSAGE"
+	"TRAVIS_COMMIT_RANGE"
+	"TRAVIS_JOB_NAME"
+	"TRAVIS_JOB_NUMBER"
+	"TRAVIS_JOB_WEB_URL"
+	"TRAVIS_PULL_REQUEST"
+	"TRAVIS_PULL_REQUEST_BRANCH"
+	"TRAVIS_PULL_REQUEST_SHA"
+	"TRAVIS_PULL_REQUEST_SLUG"
+	"TRAVIS_REPO_SLUG"
+	"TRAVIS_SECURE_ENV_VARS"
+	"TRAVIS_TAG"
+    )
 fi
 
 # Configure the service account for pulling the docker image.
@@ -167,27 +209,6 @@ required_envvars=(
     # The basic trampoline configurations.
     "TRAMPOLINE_IMAGE"
     "TRAMPOLINE_BUILD_FILE"
-)
-
-pass_down_envvars=(
-    # TRAMPOLINE_V2 variables.
-    # Tells scripts whether they are running as part of CI or not.
-    "RUNNING_IN_CI"
-    # Indicates which CI system we're in.
-    "TRAMPOLINE_CI"
-    # Indicates the version of the script.
-    "TRAMPOLINE_VERSION"
-    # KOKORO dynamic variables.
-    "KOKORO_BUILD_NUMBER"
-    "KOKORO_BUILD_ID"
-    "KOKORO_JOB_NAME"
-    "KOKORO_GIT_COMMIT"
-    "KOKORO_GITHUB_COMMIT"
-    "KOKORO_GITHUB_PULL_REQUEST_NUMBER"
-    "KOKORO_GITHUB_PULL_REQUEST_COMMIT"
-    # For Build Cop Bot
-    "KOKORO_GITHUB_COMMIT_URL"
-    "KOKORO_GITHUB_PULL_REQUEST_URL"
 )
 
 if [[ -f "${PROJECT_ROOT}/.trampolinerc" ]]; then
