@@ -26,7 +26,7 @@ def test_envvar():
         ci_envvars_tested = False
         assert 'TRAMPOLINE_CI' in os.environ
         # Travis
-        if 'TRAMPOLINE_CI' == 'travis':
+        if os.environ['TRAMPOLINE_CI'] == 'travis':
             assert 'TRAVIS_BRANCH' in os.environ
             assert 'TRAVIS_BUILD_ID' in os.environ
             assert 'TRAVIS_BUILD_NUMBER' in os.environ
@@ -40,7 +40,7 @@ def test_envvar():
             assert 'TRAVIS_REPO_SLUG' in os.environ
             assert 'TRAVIS_SECURE_ENV_VARS' in os.environ
             ci_envvars_tested = True
-        if 'TRAMPOLINE_CI' == 'kokoro':
+        if os.environ['TRAMPOLINE_CI'] == 'kokoro':
             assert 'KOKORO_BUILD_NUMBER' in os.environ
             assert 'KOKORO_BUILD_ID' in os.environ
             assert 'KOKORO_JOB_NAME' in os.environ
