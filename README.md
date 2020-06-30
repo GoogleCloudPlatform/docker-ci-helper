@@ -140,6 +140,23 @@ Optional environment variables:
 * `TRAMPOLINE_SERVICE_ACCOUNT`: A service account json file for
   authentication.
 
+## Customization
+
+You can add repo specific configuration by having `.trampolinerc` at
+the root of your git repository. You may want to copy
+`.trampolinerc_template` from this repository and edit that file.
+
+In this file, you can do:
+
+* Set default values of some environment variables for your repository.
+* Add elements to `required_envvars` and `pass_down_envvars`
+  * `required_envvars` is the list of required environment
+    variables. If any of these environment variables is not set, the
+    script will abort with a message.
+  * `pass_down_envvars` is the list of environment variables which are
+    passed down into the container when the script invoke the Docker
+    container.
+
 ## Examples
 
 ### Hello World!
