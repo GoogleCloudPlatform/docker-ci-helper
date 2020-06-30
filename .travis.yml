@@ -4,6 +4,7 @@ env:
   - TRAMPOLINE_BUILD_FILE=tests/python/run_tests.sh
     TRAMPOLINE_IMAGE=gcr.io/cloud-devrel-public-resources/docker-ci-helper/python
     TRAMPOLINE_DOCKERFILE=docker/python/Dockerfile
+    TEST_ENV=test
 
 install: skip
 script: ./trampoline_v2.sh

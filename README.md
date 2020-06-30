@@ -52,20 +52,43 @@ tests as well as changes in the Dockerfile.
 
 The following environment variables are passed down into the container.
 
-| envvar name                        | Description                              |
-| ---------------------------------- | ---------------------------------------- |
-| `RUNNING_IN_CI`                    | Tells scripts whether they are running as part of CI or not. |
-| `TRAMPOLINE_CI`                    | Indicates which CI system we're in.      |
-| `TRAMPOLINE_VERSION`               | Indicates the version of the script.     |
-| `KOKORO_BUILD_NUMBER`              |                                          |
-| `KOKORO_BUILD_ID`                  |                                          |
-| `KOKORO_JOB_NAME`                  |                                          |
-| `KOKORO_GIT_COMMIT`                |                                          |
-| `KOKORO_GITHUB_COMMIT`             |                                          |
-| `KOKORO_GITHUB_PULL_REQUEST_NUMBER`|                                          |
-| `KOKORO_GITHUB_PULL_REQUEST_COMMIT`|                                          |
-| `KOKORO_GITHUB_COMMIT_URL`         |                                          |
-| `KOKORO_GITHUB_PULL_REQUEST_URL`   |                                          |
+| envvar name                         | Description                                                  |
+| ----------------------------------  | ----------------------------------------                     |
+| `RUNNING_IN_CI`                     | Tells scripts whether they are running as part of CI or not. |
+| `TRAMPOLINE_CI`                     | Indicates which CI system we're in.                          |
+| `TRAMPOLINE_VERSION`                | Indicates the version of the script.                         |
+
+The following environment variables are passed down into the container in Kokoro build.
+
+* `KOKORO_BUILD_NUMBER`
+* `KOKORO_BUILD_ID`
+* `KOKORO_JOB_NAME`
+* `KOKORO_GIT_COMMIT`
+* `KOKORO_GITHUB_COMMIT`
+* `KOKORO_GITHUB_PULL_REQUEST_NUMBER`
+* `KOKORO_GITHUB_PULL_REQUEST_COMMIT`
+* `KOKORO_GITHUB_COMMIT_URL`
+* `KOKORO_GITHUB_PULL_REQUEST_URL`
+
+The following environment variables are passed down into the container in travis build.
+
+* `TRAVIS_BRANCH`
+* `TRAVIS_BUILD_ID`
+* `TRAVIS_BUILD_NUMBER`
+* `TRAVIS_BUILD_WEB_URL`
+* `TRAVIS_COMMIT`
+* `TRAVIS_COMMIT_MESSAGE`
+* `TRAVIS_COMMIT_RANGE`
+* `TRAVIS_JOB_NAME`
+* `TRAVIS_JOB_NUMBER`
+* `TRAVIS_JOB_WEB_URL`
+* `TRAVIS_PULL_REQUEST`
+* `TRAVIS_PULL_REQUEST_BRANCH`
+* `TRAVIS_PULL_REQUEST_SHA`
+* `TRAVIS_PULL_REQUEST_SLUG`
+* `TRAVIS_REPO_SLUG`
+* `TRAVIS_SECURE_ENV_VARS`
+* `TRAVIS_TAG`
 
 ### Upload the newly built Docker image
 
@@ -116,6 +139,23 @@ Optional environment variables:
   you know you have the image locally.
 * `TRAMPOLINE_SERVICE_ACCOUNT`: A service account json file for
   authentication.
+
+## Customization
+
+You can add repo specific configuration by having `.trampolinerc` at
+the root of your git repository. You may want to copy
+`.trampolinerc_template` from this repository and edit that file.
+
+In this file, you can do:
+
+* Set default values of some environment variables for your repository.
+* Add elements to `required_envvars` and `pass_down_envvars`
+  * `required_envvars` is the list of required environment
+    variables. If any of these environment variables is not set, the
+    script will abort with a message.
+  * `pass_down_envvars` is the list of environment variables which are
+    passed down into the container when the script invoke the Docker
+    container.
 
 ## Examples
 
