@@ -23,7 +23,7 @@ def test_envvar():
     # This is set in .travis.yml or .kokoro/python/common.cfg
     assert os.environ.get('TEST_ENV') == 'test'
     if os.environ['RUNNING_IN_CI'] == 'true':
-        ci_envvars_tested = false
+        ci_envvars_tested = False
         assert 'TRAMPOLINE_CI' in os.environ
         # Travis
         if 'TRAMPOLINE_CI' == 'travis':
@@ -39,7 +39,7 @@ def test_envvar():
             assert 'TRAVIS_JOB_WEB_URL' in os.environ
             assert 'TRAVIS_REPO_SLUG' in os.environ
             assert 'TRAVIS_SECURE_ENV_VARS' in os.environ
-            ci_envvars_tested = true
+            ci_envvars_tested = True
         if 'TRAMPOLINE_CI' == 'kokoro':
             assert 'KOKORO_BUILD_NUMBER' in os.environ
             assert 'KOKORO_BUILD_ID' in os.environ
@@ -51,5 +51,6 @@ def test_envvar():
                 assert 'KOKORO_GITHUB_PULL_REQUEST_NUMBER' in os.environ
                 assert 'KOKORO_GITHUB_PULL_REQUEST_COMMIT' in os.environ
                 assert 'KOKORO_GITHUB_PULL_REQUEST_URL' in os.environ
+            ci_envvars_tested = True
         # Make sure we test the ci specific env vars.
         assert ci_envvars_tested
