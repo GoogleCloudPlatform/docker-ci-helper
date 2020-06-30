@@ -34,7 +34,6 @@ def test_envvar():
             assert 'TRAVIS_COMMIT' in os.environ
             assert 'TRAVIS_COMMIT_MESSAGE' in os.environ
             assert 'TRAVIS_COMMIT_RANGE' in os.environ
-            assert 'TRAVIS_JOB_NAME' in os.environ
             assert 'TRAVIS_JOB_NUMBER' in os.environ
             assert 'TRAVIS_JOB_WEB_URL' in os.environ
             assert 'TRAVIS_REPO_SLUG' in os.environ
@@ -45,8 +44,6 @@ def test_envvar():
             assert 'KOKORO_BUILD_ID' in os.environ
             assert 'KOKORO_JOB_NAME' in os.environ
             assert 'KOKORO_GIT_COMMIT' in os.environ
-            assert 'KOKORO_GITHUB_COMMIT' in os.environ
-            assert 'KOKORO_GITHUB_COMMIT_URL' in os.environ
             if os.environ['KOKORO_JOB_NAME'].endswith('presubmit'):
                 assert 'KOKORO_GITHUB_PULL_REQUEST_NUMBER' in os.environ
                 assert 'KOKORO_GITHUB_PULL_REQUEST_COMMIT' in os.environ
