@@ -36,3 +36,21 @@ RUN apt-get update \
 ENV PYTHON_PIP_VERSION 10.0.1
 RUN wget --no-check-certificate -O /tmp/get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
     && python3 /tmp/get-pip.py
+
+# Create a file that only root can access. This file is tested in
+# `tests/python/test_sudo.py`.
+
+RUN echo -n 'words of wisdom' > /etc/secret_file.txt \
+  && chown root.root /etc/secret_file.txt \
+  && chmod 0600 /etc/secret_file.txt
+
+# Create a user and allow sudo
+ARG UID
+ARG USERNAME
+
+# Add a new user with the caller's uid and the username. This is
+# needed for ssh and sudo access.
+RUN useradd -d /h -u ${UID} ${USERNAME}
+
+# Allow nopasswd sudo
+RUN echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers

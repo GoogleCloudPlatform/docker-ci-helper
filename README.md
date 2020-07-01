@@ -198,6 +198,33 @@ In this file, you can do:
     passed down into the container when the script invoke the Docker
     container.
 
+## How to use `sudo` in the container
+
+Trampoline V2 will run the Docker container with the user id who runs
+the script. This means that you don't have root permission in the
+container.
+
+If you need to have the root permission, install `sudo` package in the
+Docker image and add the following piece to your `Dockerfile`.
+
+```Dockerfile
+# Create a user and allow sudo
+ARG UID
+ARG USERNAME
+
+# Add a new user with the caller's uid and the username. This is
+# needed for ssh and sudo access.
+RUN useradd -d /h -u ${UID} ${USERNAME}
+
+# Allow nopasswd sudo
+RUN echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+```
+
+Trampoline V2 uses appropriate `UID` and `USERNAME` buildargs. You can
+then use `sudo` command for whatever task that needs the root
+permission. Look at the `tests/python/test_sudo.py` for a working
+example.
+
 ## Examples
 
 ### Hello World!
