@@ -1,0 +1,21 @@
+name: Trampoline
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  my-job:
+    name: Trampoline
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Trampoline build
+      env:
+        TEST_ENV: test
+        TRAMPOLINE_BUILD_FILE: tests/python/run_tests.sh
+        TRAMPOLINE_IMAGE: gcr.io/cloud-devrel-public-resources/docker-ci-helper/python
+        TRAMPOLINE_DOCKERFILE: docker/python/Dockerfile
+      run: ${GITHUB_WORKSPACE}/trampoline_v2.sh
