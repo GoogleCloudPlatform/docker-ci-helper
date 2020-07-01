@@ -45,3 +45,6 @@ fi
 if [[ -z "${TRAMPOLINE_BUILD_FILE:-}" ]]; then
     TRAMPOLINE_BUILD_FILE=""
 fi
+
+# The build will show some commands and docker build logs.
+TRAMPOLINE_VERBOSE="true"

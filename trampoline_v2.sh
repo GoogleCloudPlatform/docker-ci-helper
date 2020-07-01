@@ -183,6 +183,25 @@ elif [[ "${TRAVIS:-}" == "true" ]]; then
 	"TRAVIS_SECURE_ENV_VARS"
 	"TRAVIS_TAG"
     )
+elif [[ -n "${GITHUB_RUN_ID:-}" ]]; then
+    RUNNING_IN_CI="true"
+    TRAMPOLINE_CI="github-workflow"
+    pass_down_envvars+=(
+	"GITHUB_WORKFLOW"
+	"GITHUB_RUN_ID"
+	"GITHUB_RUN_NUMBER"
+	"GITHUB_ACTION"
+	"GITHUB_ACTIONS"
+	"GITHUB_ACTOR"
+	"GITHUB_REPOSITORY"
+	"GITHUB_EVENT_NAME"
+	"GITHUB_EVENT_PATH"
+	"GITHUB_SHA"
+	"GITHUB_REF"
+	"GITHUB_HEAD_REF"
+	"GITHUB_BASE_REF"
+    )
+
 fi
 
 # Configure the service account for pulling the docker image.
@@ -280,6 +299,10 @@ if [[ "${TRAMPOLINE_DOCKERFILE:-none}" != "none" ]]; then
     if [[ "${RUNNING_IN_CI:-}" == "true" ]]; then
 	if docker build "${docker_build_flags[@]}" "${context_dir}" \
 		  > "${tmpdir}/docker_build.log" 2>&1; then
+	    if [[ "${TRAMPOLINE_VERBOSE:-}" == "true" ]]; then
+		cat "${tmpdir}/docker_build.log"
+	    fi
+
 	    log_green "Finished building the docker image."
 	    update_cache="true"
 	else
@@ -366,14 +389,14 @@ done
 if [[ $# -ge 1 ]]; then
     log_yellow "Running the given commands '" "${@:1}" "' in the container."
     readonly commands=("${@:1}")
-    if [[ "${TRAMPOLINE_SHOW_COMMAND:-false}" == "true" ]]; then
+    if [[ "${TRAMPOLINE_VERBOSE:-}" == "true" ]]; then
 	echo docker run "${docker_flags[@]}" "${TRAMPOLINE_IMAGE}" "${commands[@]}"
     fi
     docker run "${docker_flags[@]}" "${TRAMPOLINE_IMAGE}" "${commands[@]}"
 else
     log_yellow "Running the tests in a Docker container."
     docker_flags+=("--entrypoint=${TRAMPOLINE_BUILD_FILE}")
-    if [[ "${TRAMPOLINE_SHOW_COMMAND:-false}" == "true" ]]; then
+    if [[ "${TRAMPOLINE_VERBOSE:-}" == "true" ]]; then
 	echo docker run "${docker_flags[@]}" "${TRAMPOLINE_IMAGE}"
     fi
     docker run "${docker_flags[@]}" "${TRAMPOLINE_IMAGE}"
