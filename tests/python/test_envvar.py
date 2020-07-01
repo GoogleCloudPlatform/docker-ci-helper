@@ -37,7 +37,8 @@ def test_envvar():
             assert 'TRAVIS_JOB_WEB_URL' in os.environ
             assert 'TRAVIS_REPO_SLUG' in os.environ
             assert 'TRAVIS_SECURE_ENV_VARS' in os.environ
-            if 'TRAVIS_PULL_REQUEST' in os.environ:
+            assert 'TRAVIS_PULL_REQUEST' in os.environ:
+            if os.environ['TRAVIS_PULL_REQUEST'] != 'false':
                 assert 'TRAVIS_PULL_REQUEST_BRANCH' in os.environ
                 assert 'TRAVIS_PULL_REQUEST_SHA' in os.environ
                 assert 'TRAVIS_PULL_REQUEST_SLUG' in os.environ
