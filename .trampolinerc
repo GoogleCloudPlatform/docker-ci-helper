@@ -50,7 +50,7 @@ fi
 TRAMPOLINE_VERBOSE="true"
 
 public_image="gcr.io/cloud-devrel-public-resources/docker-ci-helper/python"
-function trampoline_upload_hook {
+function trampoline_after_upload_hook {
     log_yellow "Also uploading the Docker image to ${public_image}"
     docker tag "${TRAMPOLINE_IMAGE}" "${public_image}"
     if docker push "${public_image}"; then

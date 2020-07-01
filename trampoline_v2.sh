@@ -64,7 +64,7 @@ else
   readonly IO_COLOR_RESET=""
 fi
 
-function fn_exists {
+function function_exists {
     [ $(LC_ALL=C type -t $1)"" == "function" ]
 }
 
@@ -425,9 +425,9 @@ if [[ "${update_cache}" == "true" ]] && \
     else
 	log_red "Failed uploading the Docker image."
     fi
-    # Call trampoline_upload_hook if it's defined.
-    if fn_exists trampoline_upload_hook; then
-	trampoline_upload_hook
+    # Call trampoline_after_upload_hook if it's defined.
+    if function_exists trampoline_upload_hook; then
+	trampoline_after_upload_hook
     fi
 
 fi
