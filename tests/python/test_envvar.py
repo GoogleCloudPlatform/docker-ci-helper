@@ -20,21 +20,34 @@ def test_envvar():
     assert 'TRAMPOLINE_VERSION' in os.environ
     assert os.environ['TRAMPOLINE_VERSION'][0] == '2'
     assert 'RUNNING_IN_CI' in os.environ
+    # This is set in .travis.yml or .kokoro/python/common.cfg
+    assert os.environ.get('TEST_ENV') == 'test'
     if os.environ['RUNNING_IN_CI'] == 'true':
+        ci_envvars_tested = False
         assert 'TRAMPOLINE_CI' in os.environ
-        # This is set in .travis.yml
-        assert os.environ.get('TEST_ENV') == 'test'
-    # Travis
-    if 'TRAVIS' in os.environ:
-        assert "TRAVIS_BRANCH" in os.environ
-        assert "TRAVIS_BUILD_ID" in os.environ
-        assert "TRAVIS_BUILD_NUMBER" in os.environ
-        assert "TRAVIS_BUILD_WEB_URL" in os.environ
-        assert "TRAVIS_COMMIT" in os.environ
-        assert "TRAVIS_COMMIT_MESSAGE" in os.environ
-        assert "TRAVIS_COMMIT_RANGE" in os.environ
-        assert "TRAVIS_JOB_NAME" in os.environ
-        assert "TRAVIS_JOB_NUMBER" in os.environ
-        assert "TRAVIS_JOB_WEB_URL" in os.environ
-        assert "TRAVIS_REPO_SLUG" in os.environ
-        assert "TRAVIS_SECURE_ENV_VARS" in os.environ
+        # Travis
+        if os.environ['TRAMPOLINE_CI'] == 'travis':
+            assert 'TRAVIS_BRANCH' in os.environ
+            assert 'TRAVIS_BUILD_ID' in os.environ
+            assert 'TRAVIS_BUILD_NUMBER' in os.environ
+            assert 'TRAVIS_BUILD_WEB_URL' in os.environ
+            assert 'TRAVIS_COMMIT' in os.environ
+            assert 'TRAVIS_COMMIT_MESSAGE' in os.environ
+            assert 'TRAVIS_COMMIT_RANGE' in os.environ
+            assert 'TRAVIS_JOB_NUMBER' in os.environ
+            assert 'TRAVIS_JOB_WEB_URL' in os.environ
+            assert 'TRAVIS_REPO_SLUG' in os.environ
+            assert 'TRAVIS_SECURE_ENV_VARS' in os.environ
+            ci_envvars_tested = True
+        if os.environ['TRAMPOLINE_CI'] == 'kokoro':
+            assert 'KOKORO_BUILD_NUMBER' in os.environ
+            assert 'KOKORO_BUILD_ID' in os.environ
+            assert 'KOKORO_JOB_NAME' in os.environ
+            assert 'KOKORO_GIT_COMMIT' in os.environ
+            if os.environ['KOKORO_JOB_NAME'].endswith('presubmit'):
+                assert 'KOKORO_GITHUB_PULL_REQUEST_NUMBER' in os.environ
+                assert 'KOKORO_GITHUB_PULL_REQUEST_COMMIT' in os.environ
+                assert 'KOKORO_GITHUB_PULL_REQUEST_URL' in os.environ
+            ci_envvars_tested = True
+        # Make sure we test the ci specific env vars.
+        assert ci_envvars_tested
