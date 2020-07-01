@@ -426,7 +426,7 @@ if [[ "${update_cache}" == "true" ]] && \
 	log_red "Failed uploading the Docker image."
     fi
     # Call trampoline_after_upload_hook if it's defined.
-    if function_exists trampoline_upload_hook; then
+    if function_exists trampoline_after_upload_hook; then
 	trampoline_after_upload_hook
     fi
 
