@@ -33,11 +33,14 @@ def test_envvar():
             assert 'TRAVIS_BUILD_WEB_URL' in os.environ
             assert 'TRAVIS_COMMIT' in os.environ
             assert 'TRAVIS_COMMIT_MESSAGE' in os.environ
-            assert 'TRAVIS_COMMIT_RANGE' in os.environ
             assert 'TRAVIS_JOB_NUMBER' in os.environ
             assert 'TRAVIS_JOB_WEB_URL' in os.environ
             assert 'TRAVIS_REPO_SLUG' in os.environ
             assert 'TRAVIS_SECURE_ENV_VARS' in os.environ
+            if 'TRAVIS_PULL_REQUEST' in os.environ:
+                assert 'TRAVIS_PULL_REQUEST_BRANCH' in os.environ
+                assert 'TRAVIS_PULL_REQUEST_SHA' in os.environ
+                assert 'TRAVIS_PULL_REQUEST_SLUG' in os.environ
             ci_envvars_tested = True
         if os.environ['TRAMPOLINE_CI'] == 'kokoro':
             assert 'KOKORO_BUILD_NUMBER' in os.environ
