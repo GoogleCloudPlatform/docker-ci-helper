@@ -64,6 +64,10 @@ else
   readonly IO_COLOR_RESET=""
 fi
 
+function fn_exists {
+    [ $(LC_ALL=C type -t $1)"" == "function" ]
+}
+
 # Logs a message using the given color. The first argument must be one
 # of the IO_COLOR_* variables defined above, such as
 # "${IO_COLOR_YELLOW}". The remaining arguments will be logged in the
@@ -421,6 +425,11 @@ if [[ "${update_cache}" == "true" ]] && \
     else
 	log_red "Failed uploading the Docker image."
     fi
+    # Call trampoline_upload_hook if it's defined.
+    if fn_exists trampoline_upload_hook; then
+	trampoline_upload_hook
+    fi
+
 fi
 
 exit "${test_retval}"

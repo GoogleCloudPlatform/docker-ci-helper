@@ -48,3 +48,14 @@ fi
 
 # The build will show some commands and docker build logs.
 TRAMPOLINE_VERBOSE="true"
+
+public_image="gcr.io/cloud-devrel-public-resources/docker-ci-helper/python"
+function trampoline_upload_hook {
+    log_yellow "Also uploading the Docker image to ${public_image}"
+    docker tag "${TRAMPOLINE_IMAGE}" "${public_image}"
+    if docker push "${public_image}"; then
+	log_green "Finished uploading ${public_image}."
+    else
+	log_red "Failed uploading the ${public_image}."
+    fi
+}
