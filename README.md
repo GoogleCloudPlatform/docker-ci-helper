@@ -58,7 +58,8 @@ The following environment variables are passed down into the container.
 | `TRAMPOLINE_CI`                     | Indicates which CI system we're in.                          |
 | `TRAMPOLINE_VERSION`                | Indicates the version of the script.                         |
 
-The following environment variables are passed down into the container in Kokoro build.
+The following environment variables are passed down into the container
+in Kokoro builds:
 
 * `KOKORO_BUILD_NUMBER`
 * `KOKORO_BUILD_ID`
@@ -70,7 +71,8 @@ The following environment variables are passed down into the container in Kokoro
 * `KOKORO_GITHUB_COMMIT_URL`
 * `KOKORO_GITHUB_PULL_REQUEST_URL`
 
-The following environment variables are passed down into the container in travis build.
+The following environment variables are passed down into the container
+in travis builds:
 
 * `TRAVIS_BRANCH`
 * `TRAVIS_BUILD_ID`
@@ -89,6 +91,24 @@ The following environment variables are passed down into the container in travis
 * `TRAVIS_REPO_SLUG`
 * `TRAVIS_SECURE_ENV_VARS`
 * `TRAVIS_TAG`
+
+The following environment variables are passed down into the container
+in github workflow builds:
+
+* `GITHUB_WORKFLOW`
+* `GITHUB_RUN_ID`
+* `GITHUB_RUN_NUMBER`
+* `GITHUB_ACTION`
+* `GITHUB_ACTIONS`
+* `GITHUB_ACTOR`
+* `GITHUB_REPOSITORY`
+* `GITHUB_EVENT_NAME`
+* `GITHUB_EVENT_PATH`
+* `GITHUB_SHA`
+* `GITHUB_REF`
+* `GITHUB_HEAD_REF`
+* `GITHUB_BASE_REF`
+
 
 ### Upload the newly built Docker image
 

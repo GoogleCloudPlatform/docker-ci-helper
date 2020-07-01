@@ -183,6 +183,25 @@ elif [[ "${TRAVIS:-}" == "true" ]]; then
 	"TRAVIS_SECURE_ENV_VARS"
 	"TRAVIS_TAG"
     )
+elif [[ -n "${GITHUB_RUN_ID:-}" ]]; then
+    RUNNING_IN_CI="true"
+    TRAMPOLINE_CI="github-workflow"
+    pass_down_envvars+=(
+	"GITHUB_WORKFLOW"
+	"GITHUB_RUN_ID"
+	"GITHUB_RUN_NUMBER"
+	"GITHUB_ACTION"
+	"GITHUB_ACTIONS"
+	"GITHUB_ACTOR"
+	"GITHUB_REPOSITORY"
+	"GITHUB_EVENT_NAME"
+	"GITHUB_EVENT_PATH"
+	"GITHUB_SHA"
+	"GITHUB_REF"
+	"GITHUB_HEAD_REF"
+	"GITHUB_BASE_REF"
+    )
+
 fi
 
 # Configure the service account for pulling the docker image.
