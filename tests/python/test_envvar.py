@@ -68,6 +68,25 @@ def test_envvar():
             assert 'GITHUB_EVENT_PATH' in os.environ
             assert 'GITHUB_SHA' in os.environ
             ci_envvars_tested = True
+        # CircleCI
+        elif os.environ['TRAMPOLINE_CI'] == 'circleci':
+            assert 'CIRCLE_BRANCH' in os.environ
+            assert 'CIRCLE_BUILD_NUM' in os.environ
+            assert 'CIRCLE_BUILD_URL' in os.environ
+            assert 'CIRCLE_JOB' in os.environ
+            assert 'CIRCLE_NODE_INDEX' in os.environ
+            assert 'CIRCLE_NODE_TOTAL' in os.environ
+            assert 'CIRCLE_PREVIOUS_BUILD_NUM' in os.environ
+            assert 'CIRCLE_PROJECT_REPONAME' in os.environ
+            assert 'CIRCLE_PROJECT_USERNAME' in os.environ
+            assert 'CIRCLE_REPOSITORY_URL' in os.environ
+            assert 'CIRCLE_SHA1' in os.environ
+            assert 'CIRCLE_STAGE' in os.environ
+            assert 'CIRCLE_USERNAME' in os.environ
+            assert 'CIRCLE_WORKFLOW_ID' in os.environ
+            assert 'CIRCLE_WORKFLOW_JOB_ID' in os.environ
+            assert 'CIRCLE_WORKFLOW_WORKSPACE_ID' in os.environ
+            ci_envvars_tested = True
 
         # Make sure we test the ci specific env vars.
         assert ci_envvars_tested
