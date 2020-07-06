@@ -24,10 +24,31 @@ ENV LANG C.UTF-8
 # Install dependencies.
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
+  ca-certificates \
+  curl \
+  gnupg2 \
+  lsb-release \
   python3 \
   python3-distutils \
+  software-properties-common \
   sudo \
   wget \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y \
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -f /var/cache/apt/archives/*.deb
+
+# Install docker
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    docker-ce \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/* \
