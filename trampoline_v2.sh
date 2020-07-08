@@ -141,6 +141,8 @@ pass_down_envvars=(
     "TRAMPOLINE_VERSION"
 )
 
+log_yellow "Building with Trampoline ${TRAMPOLINE_VERSION}"
+
 mkdir -p "${tmpdir}/gcloud"
 gcloud_config_dir="${tmpdir}/gcloud"
 
@@ -270,8 +272,6 @@ required_envvars=(
 if [[ -f "${PROJECT_ROOT}/.trampolinerc" ]]; then
     source "${PROJECT_ROOT}/.trampolinerc"
 fi
-
-log_yellow "Building with Trampoline ${TRAMPOLINE_VERSION}"
 
 log_yellow "Checking environment variables."
 for e in "${required_envvars[@]}"
