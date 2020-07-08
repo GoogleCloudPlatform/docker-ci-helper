@@ -52,6 +52,8 @@
 
 set -euo pipefail
 
+TRAMPOLINE_VERSION="2.0.1"
+
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
   readonly IO_COLOR_GREEN="$(tput setaf 2)"
@@ -125,7 +127,6 @@ PROGRAM_DIR="$(dirname "${PROGRAM_PATH}")"
 PROJECT_ROOT="$(repo_root "${PROGRAM_DIR}")"
 
 RUNNING_IN_CI="${RUNNING_IN_CI:-false}"
-TRAMPOLINE_VERSION="2.0.0"
 
 # The workspace in the container, defaults to /workspace.
 TRAMPOLINE_WORKSPACE="${TRAMPOLINE_WORKSPACE:-/workspace}"
@@ -140,6 +141,12 @@ pass_down_envvars=(
     "TRAMPOLINE_VERSION"
 )
 
+mkdir -p "${tmpdir}/gcloud"
+gcloud_config_dir="${tmpdir}/gcloud"
+
+log_yellow "Using isolated gcloud config: ${gcloud_config_dir}."
+export CLOUDSDK_CONFIG="${gcloud_config_dir}"
+
 # Detect which CI systems we're in. If we're in any of the CI systems
 # we support, `RUNNING_IN_CI` will be true and `TRAMPOLINE_CI` will be
 # the name of the CI system. Both envvars will be passing down to the
@@ -148,10 +155,20 @@ if [[ -n "${KOKORO_BUILD_ID:-}" ]]; then
     # descriptive env var for indicating it's on CI.
     RUNNING_IN_CI="true"
     TRAMPOLINE_CI="kokoro"
-    # We should be able to use the default service account.
-    log_yellow "Configuring Container Registry access"
-    gcloud auth list
-    gcloud auth configure-docker --quiet
+    if [[ "${TRAMPOLINE_USE_LEGACY_SERVICE_ACCOUNT:-}" == "true" ]]; then
+	if [[ ! -f "${KOKORO_GFILE_DIR}/kokoro-trampoline.service-account.json" ]]; then
+	    log_red "${KOKORO_GFILE_DIR}/kokoro-trampoline.service-account.json does not exist. Did you forget to mount cloud-devrel-kokoro-resources/trampoline? Aborting."
+	    exit 1
+	fi
+	# This service account will be activated later.
+	TRAMPOLINE_SERVICE_ACCOUNT="${KOKORO_GFILE_DIR}/kokoro-trampoline.service-account.json"
+    else
+	if [[ "${TRAMPOLINE_VERBOSE:-}" == "true" ]]; then
+	    gcloud auth list
+	fi
+	log_yellow "Configuring Container Registry access"
+	gcloud auth configure-docker --quiet
+    fi
     pass_down_envvars+=(
 	# KOKORO dynamic variables.
 	"KOKORO_BUILD_NUMBER"
@@ -233,12 +250,6 @@ fi
 # Configure the service account for pulling the docker image.
 if [[ -n "${TRAMPOLINE_SERVICE_ACCOUNT:-}" ]]; then
 
-    mkdir -p "${tmpdir}/gcloud"
-    gcloud_config_dir="${tmpdir}/gcloud"
-
-    log_yellow "Using isolated gcloud config: ${gcloud_config_dir}."
-    export CLOUDSDK_CONFIG="${gcloud_config_dir}"
-
     log_yellow "Using ${TRAMPOLINE_SERVICE_ACCOUNT} for authentication."
     gcloud auth activate-service-account \
 	   --key-file "${TRAMPOLINE_SERVICE_ACCOUNT}"
@@ -259,6 +270,8 @@ required_envvars=(
 if [[ -f "${PROJECT_ROOT}/.trampolinerc" ]]; then
     source "${PROJECT_ROOT}/.trampolinerc"
 fi
+
+log_yellow "Building with Trampoline ${TRAMPOLINE_VERSION}"
 
 log_yellow "Checking environment variables."
 for e in "${required_envvars[@]}"
