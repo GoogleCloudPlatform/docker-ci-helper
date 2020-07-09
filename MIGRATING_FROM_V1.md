@@ -176,7 +176,7 @@ Trampoline supports both use cases.
 
 If you want to rely on the legacy Trampoline service account, you need
 to add `TRAMPOLINE_USE_LEGACY_SERVICE_ACCOUNT` to the environment
-allow list in the Kokoro job config follows:
+allow list in the Kokoro job config as follows:
 
 ```
 # Use the legacy Trampoline service account in the bucket.
