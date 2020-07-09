@@ -339,7 +339,7 @@ if [[ "${TRAMPOLINE_DOCKERFILE:-none}" != "none" ]]; then
     fi
 
     log_yellow "Start building the docker image."
-    if [[ "${TRAMPOLINE_SHOW_COMMAND:-false}" == "true" ]]; then
+    if [[ "${TRAMPOLINE_VERBOSE:-false}" == "true" ]]; then
 	echo "docker build" "${docker_build_flags[@]}" "${context_dir}"
     fi
 
