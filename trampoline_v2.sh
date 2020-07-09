@@ -52,7 +52,7 @@
 
 set -euo pipefail
 
-TRAMPOLINE_VERSION="2.0.1"
+TRAMPOLINE_VERSION="2.0.2"
 
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
@@ -114,18 +114,6 @@ function cleanup() {
 }
 trap cleanup EXIT
 
-function repo_root() {
-    local dir="$1"
-    while [[ ! -d "${dir}/.git" ]]; do
-	dir="$(dirname "$dir")"
-    done
-    echo "${dir}"
-}
-
-PROGRAM_PATH="$(realpath "$0")"
-PROGRAM_DIR="$(dirname "${PROGRAM_PATH}")"
-PROJECT_ROOT="$(repo_root "${PROGRAM_DIR}")"
-
 RUNNING_IN_CI="${RUNNING_IN_CI:-false}"
 
 # The workspace in the container, defaults to /workspace.
@@ -142,12 +130,6 @@ pass_down_envvars=(
 )
 
 log_yellow "Building with Trampoline ${TRAMPOLINE_VERSION}"
-
-mkdir -p "${tmpdir}/gcloud"
-gcloud_config_dir="${tmpdir}/gcloud"
-
-log_yellow "Using isolated gcloud config: ${gcloud_config_dir}."
-export CLOUDSDK_CONFIG="${gcloud_config_dir}"
 
 # Detect which CI systems we're in. If we're in any of the CI systems
 # we support, `RUNNING_IN_CI` will be true and `TRAMPOLINE_CI` will be
@@ -252,6 +234,12 @@ fi
 # Configure the service account for pulling the docker image.
 if [[ -n "${TRAMPOLINE_SERVICE_ACCOUNT:-}" ]]; then
 
+    mkdir -p "${tmpdir}/gcloud"
+    gcloud_config_dir="${tmpdir}/gcloud"
+
+    log_yellow "Using isolated gcloud config: ${gcloud_config_dir}."
+    export CLOUDSDK_CONFIG="${gcloud_config_dir}"
+
     log_yellow "Using ${TRAMPOLINE_SERVICE_ACCOUNT} for authentication."
     gcloud auth activate-service-account \
 	   --key-file "${TRAMPOLINE_SERVICE_ACCOUNT}"
@@ -259,6 +247,24 @@ if [[ -n "${TRAMPOLINE_SERVICE_ACCOUNT:-}" ]]; then
     gcloud auth configure-docker --quiet
 fi
 
+function repo_root() {
+    local dir="$1"
+    while [[ ! -d "${dir}/.git" ]]; do
+	dir="$(dirname "$dir")"
+    done
+    echo "${dir}"
+}
+
+# Detect the project root. In CI builds, we assume the script is in
+# the git tree and traverse from there, otherwise, traverse from `pwd`
+# to find `.git` directory.
+if [[ "${RUNNING_IN_CI:-}" == "true" ]]; then
+    PROGRAM_PATH="$(realpath "$0")"
+    PROGRAM_DIR="$(dirname "${PROGRAM_PATH}")"
+    PROJECT_ROOT="$(repo_root "${PROGRAM_DIR}")"
+else
+    PROJECT_ROOT="$(repo_root $(pwd))"
+fi
 
 log_yellow "Changing to the project root: ${PROJECT_ROOT}."
 cd "${PROJECT_ROOT}"
