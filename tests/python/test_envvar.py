@@ -76,7 +76,6 @@ def test_envvar():
             assert 'CIRCLE_JOB' in os.environ
             assert 'CIRCLE_NODE_INDEX' in os.environ
             assert 'CIRCLE_NODE_TOTAL' in os.environ
-            assert 'CIRCLE_PREVIOUS_BUILD_NUM' in os.environ
             assert 'CIRCLE_PROJECT_REPONAME' in os.environ
             assert 'CIRCLE_PROJECT_USERNAME' in os.environ
             assert 'CIRCLE_REPOSITORY_URL' in os.environ
