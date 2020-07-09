@@ -15,7 +15,6 @@
 
 # Shortcut to run the tests locally.
 
-export TRAMPOLINE_SKIP_DOWNLOAD_IMAGE=true
 export TRAMPOLINE_BUILD_FILE=tests/python/run_tests.sh
 export TRAMPOLINE_IMAGE=gcr.io/cloud-devrel-kokoro-resources/docker-ci-helper/python
 export TRAMPOLINE_DOCKERFILE=docker/python/Dockerfile

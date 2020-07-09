@@ -27,7 +27,7 @@ We'll discuss each steps in detail.
 ### Prepare the Docker image
 
 1. Try to download a Docker image specified by `TRAMPOLINE_IMAGE`
-   environment variable.
+   environment variable in CI builds.
 2. If `TRAMPOLINE_DOCKERFILE` environment variable is specified, it
    will build the Docker image from that Dockerfile. If there's a
    downloaded Docker image, Trampoline V2 uses the downloaded image as
@@ -176,8 +176,6 @@ Optional environment variables:
   Docker image after the successful builds.
 * `TRAMPOLINE_WORKSPACE`: The workspace path in the docker container.
   Defaults to /workspace.
-* `TRAMPOLINE_SKIP_DOWNLOAD_IMAGE`: Skip downloading the image when
-  you know you have the image locally.
 * `TRAMPOLINE_SERVICE_ACCOUNT`: A service account json file for
   authentication.
 
