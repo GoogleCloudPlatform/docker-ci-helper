@@ -43,16 +43,13 @@
 # TRAMPOLINE_BUILD_FILE: The script to run in the docker container.
 # TRAMPOLINE_WORKSPACE: The workspace path in the docker container.
 #                       Defaults to /workspace.
-# TRAMPOLINE_SKIP_DOWNLOAD_IMAGE: Skip downloading the image when you
-#                                 know you have the image locally.
-#
 # Potentially there are some repo specific envvars in .trampolinerc in
 # the project root.
 
 
 set -euo pipefail
 
-TRAMPOLINE_VERSION="2.0.2"
+TRAMPOLINE_VERSION="2.0.3"
 
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
@@ -288,23 +285,30 @@ do
     fi
 done
 
-if [[ "${TRAMPOLINE_SKIP_DOWNLOAD_IMAGE:-false}" == "true" ]]; then
-    log_yellow "Re-using the local Docker image."
-    has_cache="true"
-else
-    log_yellow "Preparing Docker image."
+# ignore error on docker operations and test execution
+set +e
+
+log_yellow "Preparing Docker image."
+# We only download the docker image in CI builds.
+if [[ "${RUNNING_IN_CI:-}" == "true" ]]; then
     # Download the docker image specified by `TRAMPOLINE_IMAGE`
 
-    set +e  # ignore error on docker operations
     # We may want to add --max-concurrent-downloads flag.
 
     log_yellow "Start pulling the Docker image: ${TRAMPOLINE_IMAGE}."
     if docker pull "${TRAMPOLINE_IMAGE}"; then
 	log_green "Finished pulling the Docker image: ${TRAMPOLINE_IMAGE}."
-	has_cache="true"
+	has_image="true"
     else
 	log_red "Failed pulling the Docker image: ${TRAMPOLINE_IMAGE}."
-	has_cache="false"
+	has_image="false"
+    fi
+else
+    # For local run, check if we have the image.
+    if docker images "${TRAMPOLINE_IMAGE}:latest" | grep "${TRAMPOLINE_IMAGE}"; then
+	has_image="true"
+    else
+	has_image="false"
     fi
 fi
 
@@ -330,7 +334,7 @@ if [[ "${TRAMPOLINE_DOCKERFILE:-none}" != "none" ]]; then
 	"--build-arg" "UID=${user_uid}"
 	"--build-arg" "USERNAME=${user_name}"
     )
-    if [[ "${has_cache}" == "true" ]]; then
+    if [[ "${has_image}" == "true" ]]; then
 	docker_build_flags+=("--cache-from" "${TRAMPOLINE_IMAGE}")
     fi
 
@@ -366,8 +370,8 @@ if [[ "${TRAMPOLINE_DOCKERFILE:-none}" != "none" ]]; then
 	fi
     fi
 else
-    if [[ "${has_cache}" != "true" ]]; then
-	log_red "failed to download the image ${TRAMPOLINE_IMAGE}, aborting."
+    if [[ "${has_image}" != "true" ]]; then
+	log_red "We do not have ${TRAMPOLINE_IMAGE} locally, aborting."
 	exit 1
     fi
 fi
