@@ -14,6 +14,10 @@ will allow you to run the tests in various environments including any
 CI systems, as well as on your local workstation without worrying
 about installing the test dependencies.
 
+Note: If you want to migrate your builds from Trampoline V1 to
+Trampoline V2, also read
+[`MIGRATING_FROM_V1.md`](https://github.com/GoogleCloudPlatform/docker-ci-helper/blob/master/MIGRATING_FROM_V1.md).
+
 ## trampoline_v2.sh
 
 This script does 3 things.
