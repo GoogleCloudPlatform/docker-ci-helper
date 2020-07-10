@@ -9,3 +9,6 @@
 
 * 2.0.3
   remove TRAMPOLINE_SKIP_DOWNLOAD_IMAGE envvar [#27](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/27)
+
+* 2.0.4
+  support relative path for TRAMPOLINE_SERVICE_ACCOUNT envvar [#29](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/29)
