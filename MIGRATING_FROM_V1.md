@@ -20,9 +20,10 @@ executable bit.
 ```sh
 $ git clone git@github.com:GoogleCloudPlatform/getting-started-python.git
 $ cd getting-started-python
-$ cp ../docker-ci-helper/trampoline_v2.sh .kokoro
-$ ls -al .kokoro/trampoline_v2.sh
--rwxr-x--- 1 user group 14591 Jul  9 20:28 .kokoro/trampoline_v2.sh
+$ curl \
+    https://raw.githubusercontent.com/GoogleCloudPlatform/docker-ci-helper/master/trampoline_v2.sh \
+    -o .kokoro/trampoline_v2.sh
+$ chmod +x .kokoro/trampoline_v2.sh
 ```
 
 Then you will need to set some environment variables. We can mostly
@@ -73,7 +74,7 @@ Our first run failed with the following message:
 .kokoro/system_tests.sh: line 21: cd: github/getting-started-python: No such file or directory
 ```
 
-We can modify this line:
+We can modify [this line](https://github.com/GoogleCloudPlatform/getting-started-python/blob/f1170dc637c0f70e3f41055061d88c6b169e05ca/.kokoro/system_tests.sh#L21):
 
 ```
 cd github/getting-started-python
