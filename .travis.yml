@@ -6,6 +6,7 @@ env:
     TRAMPOLINE_DOCKERFILE=docker/python/Dockerfile
     TRAMPOLINE_SERVICE_ACCOUNT=ci/service-account.json
     TEST_ENV=test
+    PATH=/tmp/google-cloud-sdk/bin:${PATH}
 
 before_install:
   - >
@@ -14,5 +15,5 @@ before_install:
     -in service-account.json.enc
     -out ci/service-account.json -d
 # For `gcloud auth configure docker`
-install: sudo gcloud components install docker-credential-gcr
+install: ci/install-gcloud.sh
 script: ./trampoline_v2.sh
