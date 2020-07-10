@@ -13,5 +13,6 @@ before_install:
     -iv $encrypted_22c8f4d50f05_iv
     -in service-account.json.enc
     -out ci/service-account.json -d
-install: skip
+# For `gcloud auth configure docker`
+install: sudo gcloud components install docker-credential-gcr
 script: ./trampoline_v2.sh
