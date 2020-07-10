@@ -26,5 +26,5 @@ wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk
 
 cd /tmp
 tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz
-/tmp/google-cloud-sdk/install.sh
-/tmp/google-cloud-sdk/bin/gcloud components install docker-credential-gcr
+/tmp/google-cloud-sdk/install.sh -q
+/tmp/google-cloud-sdk/bin/gcloud -q components install docker-credential-gcr
