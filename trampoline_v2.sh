@@ -287,6 +287,11 @@ do
     fi
 done
 
+# We want to support legacy style TRAMPOLINE_BUILD_FILE used with V1
+# script: e.g. "github/repo-name/.kokoro/run_tests.sh"
+TRAMPOLINE_BUILD_FILE="${TRAMPOLINE_BUILD_FILE#github/[^/]*/}"
+log_yellow "Using TRAMPOLINE_BUILD_FILE: ${TRAMPOLINE_BUILD_FILE}"
+
 # ignore error on docker operations and test execution
 set +e
 

@@ -191,9 +191,13 @@ allowed_env_vars: {
 
 With Trampoline V1, `TRAMPOLINE_BUILD_FILE` is in the form of
 `github/getting-started-python/.kokoro/.*`, but with Trampoline V2,
-you can not have `github/getting-started-python` part.
+you can omit `github/getting-started-python` part.
 
-So you may need to relax the regex if you have a strict one.
+This is cleaner because it is CI agnostic, but note that Trampoline V2
+also support the legacy form too.
+
+If you want to use the relative path, you may want to allow both cases
+temporarily.
 
 For example, this is the original configuration in our example repo:
 
@@ -205,8 +209,8 @@ allowed_env_vars: {
 }
 ```
 
-We want to change it to allow both cases(so that the change is not
-desruptive):
+You may want to change it to allow both cases(so that the change is
+not desruptive):
 
 ```# Allow configuring the trampoline build file.
 allowed_env_vars: {
