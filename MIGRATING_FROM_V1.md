@@ -194,7 +194,7 @@ With Trampoline V1, `TRAMPOLINE_BUILD_FILE` is in the form of
 you can omit `github/getting-started-python` part.
 
 This is cleaner because it is CI agnostic, but note that Trampoline V2
-also support the legacy form too.
+also supports the legacy form too.
 
 If you want to use the relative path, you may want to allow both cases
 temporarily.
