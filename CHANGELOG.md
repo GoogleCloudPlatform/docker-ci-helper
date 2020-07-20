@@ -12,3 +12,6 @@
 
 * 2.0.4
   support relative path for TRAMPOLINE_SERVICE_ACCOUNT envvar [#29](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/29)
+
+* 2.0.5
+  support legacy style TRAMPOLINE_BUILD_FILE [#30](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/30)
