@@ -49,7 +49,7 @@
 
 set -euo pipefail
 
-TRAMPOLINE_VERSION="2.0.3"
+TRAMPOLINE_VERSION="2.0.4"
 
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
@@ -229,21 +229,6 @@ elif [[ "${CIRCLECI:-}" == "true" ]]; then
 fi
 
 # Configure the service account for pulling the docker image.
-if [[ -n "${TRAMPOLINE_SERVICE_ACCOUNT:-}" ]]; then
-
-    mkdir -p "${tmpdir}/gcloud"
-    gcloud_config_dir="${tmpdir}/gcloud"
-
-    log_yellow "Using isolated gcloud config: ${gcloud_config_dir}."
-    export CLOUDSDK_CONFIG="${gcloud_config_dir}"
-
-    log_yellow "Using ${TRAMPOLINE_SERVICE_ACCOUNT} for authentication."
-    gcloud auth activate-service-account \
-	   --key-file "${TRAMPOLINE_SERVICE_ACCOUNT}"
-    log_yellow "Configuring Container Registry access"
-    gcloud auth configure-docker --quiet
-fi
-
 function repo_root() {
     local dir="$1"
     while [[ ! -d "${dir}/.git" ]]; do
@@ -265,6 +250,23 @@ fi
 
 log_yellow "Changing to the project root: ${PROJECT_ROOT}."
 cd "${PROJECT_ROOT}"
+
+# To support relative path for `TRAMPOLINE_SERVICE_ACCOUNT`, we need
+# to use this environment variable in `PROJECT_ROOT`.
+if [[ -n "${TRAMPOLINE_SERVICE_ACCOUNT:-}" ]]; then
+
+    mkdir -p "${tmpdir}/gcloud"
+    gcloud_config_dir="${tmpdir}/gcloud"
+
+    log_yellow "Using isolated gcloud config: ${gcloud_config_dir}."
+    export CLOUDSDK_CONFIG="${gcloud_config_dir}"
+
+    log_yellow "Using ${TRAMPOLINE_SERVICE_ACCOUNT} for authentication."
+    gcloud auth activate-service-account \
+	   --key-file "${TRAMPOLINE_SERVICE_ACCOUNT}"
+    log_yellow "Configuring Container Registry access"
+    gcloud auth configure-docker --quiet
+fi
 
 required_envvars=(
     # The basic trampoline configurations.

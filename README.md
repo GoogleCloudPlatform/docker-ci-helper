@@ -153,7 +153,10 @@ add appropriate permissions.
 
 On other CI systems, you need to securely pass a service account json
 file and set `TRAMPOLINE_SERVICE_ACCOUNT` environment variable
-pointing to that file.
+pointing to that file. An example is available in our travis
+builds([.travis.yml](https://github.com/GoogleCloudPlatform/docker-ci-helper/blob/master/.travis.yml)).
+See also
+[the Travis documentation](https://docs.travis-ci.com/user/encrypting-files/).
 
 In either case, you need at least read permission on the Google
 Container Registry artifact bucket. You also need write permission on
