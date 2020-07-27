@@ -49,7 +49,7 @@
 
 set -euo pipefail
 
-TRAMPOLINE_VERSION="2.0.4"
+TRAMPOLINE_VERSION="2.0.5"
 
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
