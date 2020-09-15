@@ -49,7 +49,7 @@
 
 set -euo pipefail
 
-TRAMPOLINE_VERSION="2.0.5"
+TRAMPOLINE_VERSION="2.0.6"
 
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
@@ -312,7 +312,7 @@ if [[ "${RUNNING_IN_CI:-}" == "true" ]]; then
     fi
 else
     # For local run, check if we have the image.
-    if docker images "${TRAMPOLINE_IMAGE}:latest" | grep "${TRAMPOLINE_IMAGE}"; then
+    if docker images "${TRAMPOLINE_IMAGE}" | grep "${TRAMPOLINE_IMAGE%:*}"; then
 	has_image="true"
     else
 	has_image="false"
