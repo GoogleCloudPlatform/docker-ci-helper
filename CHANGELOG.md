@@ -15,3 +15,6 @@
 
 * 2.0.5
   support legacy style TRAMPOLINE_BUILD_FILE [#30](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/30)
+
+* 2.0.6
+  fix the docker image detection logic [#34](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/34)
