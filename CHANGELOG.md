@@ -20,4 +20,4 @@
   fix the docker image detection logic [#35](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/35)
 
 * 2.0.7
-  add a comment about the github repo [#37](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/37)
+  add a comment about the github repo [#38](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/38)
