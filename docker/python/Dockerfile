@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This file is hosted in the "docker-ci-helper" repo:
+# https://github.com/GoogleCloudPlatform/docker-ci-helper/blob/master/docker/python/Dockerfile
+
 FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -30,6 +33,8 @@ RUN apt-get update \
   lsb-release \
   python3 \
   python3-distutils \
+  libpython3-dev \
+  build-essential \
   software-properties-common \
   sudo \
   wget \
