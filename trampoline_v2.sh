@@ -50,7 +50,7 @@
 
 set -euo pipefail
 
-TRAMPOLINE_VERSION="2.0.7"
+TRAMPOLINE_VERSION="2.0.8"
 
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
@@ -163,6 +163,7 @@ if [[ -n "${KOKORO_BUILD_ID:-}" ]]; then
 	# For Build Cop Bot
 	"KOKORO_GITHUB_COMMIT_URL"
 	"KOKORO_GITHUB_PULL_REQUEST_URL"
+	"KOKORO_BUILD_ARTIFACTS_SUBDIR"
     )
 elif [[ "${TRAVIS:-}" == "true" ]]; then
     RUNNING_IN_CI="true"
