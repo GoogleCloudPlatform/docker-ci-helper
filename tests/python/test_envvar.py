@@ -52,6 +52,7 @@ def test_envvar():
             assert 'KOKORO_BUILD_ID' in os.environ
             assert 'KOKORO_JOB_NAME' in os.environ
             assert 'KOKORO_GIT_COMMIT' in os.environ
+            assert 'KOKORO_BUILD_ARTIFACTS_SUBDIR' in os.environ
             if os.environ['KOKORO_JOB_NAME'].endswith('presubmit'):
                 assert 'KOKORO_GITHUB_PULL_REQUEST_NUMBER' in os.environ
                 assert 'KOKORO_GITHUB_PULL_REQUEST_COMMIT' in os.environ
