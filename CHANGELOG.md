@@ -23,4 +23,4 @@
   add a comment about the github repo [#38](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/38)
 
 * 2.0.8
-  add `KOKORO_BUILD_ARTIFACTS_SUBDIR` [#41](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/41)
+  add `KOKORO_BUILD_ARTIFACTS_SUBDIR` [#42](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/42)
