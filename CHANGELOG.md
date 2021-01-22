@@ -27,3 +27,6 @@
 
 * 2.0.9
   Comment update for Flaky Bot [#43](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/43)
+
+* 2.0.10
+  Correct verion string [#44](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/44)
