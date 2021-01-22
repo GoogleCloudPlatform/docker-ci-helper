@@ -24,3 +24,6 @@
 
 * 2.0.8
   add `KOKORO_BUILD_ARTIFACTS_SUBDIR` [#42](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/42)
+
+* 2.0.9
+  Comment update for Flaky Bot [#43](https://github.com/GoogleCloudPlatform/docker-ci-helper/pull/43)
