@@ -51,7 +51,7 @@
 set -euo pipefail
 
 # x-release-please-start-version
-TRAMPOLINE_VERSION="2.0.10"
+TRAMPOLINE_VERSION="2.0.11"
 # x-release-please-end
 
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
