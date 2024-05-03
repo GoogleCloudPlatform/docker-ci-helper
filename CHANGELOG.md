@@ -1,3 +1,12 @@
+# Changelog
+
+## [2.0.11](https://github.com/GoogleCloudPlatform/docker-ci-helper/compare/v2.0.10...v2.0.11) (2024-05-03)
+
+
+### Bug Fixes
+
+* update main script with lint fixes ([#50](https://github.com/GoogleCloudPlatform/docker-ci-helper/issues/50)) ([1497d14](https://github.com/GoogleCloudPlatform/docker-ci-helper/commit/1497d148d9300a659eaab08bcf7f92183d6377ab))
+
 * 2.0.0
   initial release
 
