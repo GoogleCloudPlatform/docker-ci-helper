@@ -37,7 +37,7 @@ We'll discuss each steps in detail.
    downloaded Docker image, Trampoline V2 uses the downloaded image as
    a cache.
 
-We recomnend you have the Dockerfile in the same repository as your
+We recommend you have the Dockerfile in the same repository as your
 build file and your tests, then specify `TRAMPOLINE_DOCKERFILE`. This
 will allow you to create a single pull request containing changes in
 tests as well as changes in the Dockerfile.
@@ -188,13 +188,11 @@ Optional environment variables:
 
 ## Installation
 
-Please copy the `trampoline_v2.sh` to your repository (
+To use the trampoline script, copy the `trampoline_v2.sh` to your repository (
 [example in python-docs-samples](https://github.com/GoogleCloudPlatform/python-docs-samples/blob/main/.kokoro/trampoline_v2.sh)
 ) and set `build_file` in your Kokoro build configuration to the
 file ([example in python-docs-samples's python3.9 jobs](
 https://github.com/GoogleCloudPlatform/python-docs-samples/blob/6d2cb2fae50370b3f6b9ba17c48fa137ce7f3f5b/.kokoro/python3.9/common.cfg#L29)).
-
-
 
 ## Customization
 

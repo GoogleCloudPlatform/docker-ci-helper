@@ -100,7 +100,6 @@ do it.
 * Using Secret Manager
 * Using files in `KOKORO_GFILE_DIR` or `KOKORO_KEYSTORE_DIR`
 
-
 Secret Manager is the recommended way. If you're using Secret Manager,
 only you need to do is to setup right permission to use Secret
 Manager.
@@ -167,13 +166,14 @@ from the Container Registry.
 There are two ways to do this:
 
 1. Attach a service account to the Kokoro VM
-2. Use the Trampoline service account in the `trampoline` GCS bucket.
+2. Use the Trampoline service account in the `trampoline` GCS bucket (**This will stop working**).
 
 While it is recommended to use the first option, many Kokoro builds
 with Trampoline V1 rely on a Trampoline service account stored in the
 `trampoline` GCS bucket.
 
-Trampoline supports both use cases.
+The Trampoline script supports both use cases but the restriction on exported
+keys is going to ban this usage.
 
 If you want to rely on the legacy Trampoline service account, you need
 to add `TRAMPOLINE_USE_LEGACY_SERVICE_ACCOUNT` to the environment
