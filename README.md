@@ -186,6 +186,16 @@ Optional environment variables:
 * `TRAMPOLINE_SERVICE_ACCOUNT`: A service account json file for
   authentication.
 
+## Installation
+
+Please copy the `trampoline_v2.sh` to your repository (
+[example in python-docs-samples](https://github.com/GoogleCloudPlatform/python-docs-samples/blob/main/.kokoro/trampoline_v2.sh)
+) and set `build_file` in your Kokoro build configuration to the
+file ([example in python-docs-samples's python3.9 jobs](
+https://github.com/GoogleCloudPlatform/python-docs-samples/blob/6d2cb2fae50370b3f6b9ba17c48fa137ce7f3f5b/.kokoro/python3.9/common.cfg#L29)).
+
+
+
 ## Customization
 
 You can add repo specific configuration by having `.trampolinerc` at
