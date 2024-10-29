@@ -429,15 +429,15 @@ docker_flags=(
 # If TRAMPOLINE_SKIP_USER is set, then do not override the user we run as
 if [[ "${TRAMPOLINE_SKIP_USER:-}" != "true" ]]
 then
-    docker_flags+=(
-        # Run the docker script with the user id. Because the docker image gets to
-        # write in ${PWD} you typically want this to be your user id.
-        # To allow docker in docker, we need to use docker gid on the host.
-        "--user" "${user_uid}:${docker_gid}"
+  docker_flags+=(
+    # Run the docker script with the user id. Because the docker image gets to
+    # write in ${PWD} you typically want this to be your user id.
+    # To allow docker in docker, we need to use docker gid on the host.
+    "--user" "${user_uid}:${docker_gid}"
 
-        # Pass down the USER.
-        "--env" "USER=${user_name}"
-    )
+    # Pass down the USER.
+    "--env" "USER=${user_name}"
+  )
 fi
 
 # Add an option for nicer output if the build gets a tty.
