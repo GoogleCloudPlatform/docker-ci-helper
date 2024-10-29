@@ -40,8 +40,8 @@
 # TRAMPOLINE_BUILD_FILE: The script to run in the docker container.
 # TRAMPOLINE_WORKSPACE: The workspace path in the docker container.
 #                       Defaults to /workspace.
-# TRAMPOLINE_SKIP_USER: If set, run as the default user defined in the
-#                       docker image.
+# TRAMPOLINE_SKIP_USER: If set to "true", run as the default user
+#                       defined in the docker image.
 #
 # Potentially there are some repo specific envvars in .trampolinerc in
 # the project root.
@@ -427,7 +427,7 @@ docker_flags=(
 )
 
 # If TRAMPOLINE_SKIP_USER is set, then do not override the user we run as
-if [[ -z "${TRAMPOLINE_SKIP_USER}" ]]
+if [[ "${TRAMPOLINE_SKIP_USER:-}" == "true" ]]
 then
     docker_flags+=(
         # Run the docker script with the user id. Because the docker image gets to
