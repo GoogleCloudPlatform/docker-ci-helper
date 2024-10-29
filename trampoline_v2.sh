@@ -40,6 +40,9 @@
 # TRAMPOLINE_BUILD_FILE: The script to run in the docker container.
 # TRAMPOLINE_WORKSPACE: The workspace path in the docker container.
 #                       Defaults to /workspace.
+# TRAMPOLINE_SKIP_USER: If set, run as the default user defined in the
+#                       docker image.
+#
 # Potentially there are some repo specific envvars in .trampolinerc in
 # the project root.
 #
@@ -399,14 +402,6 @@ docker_flags=(
   # isolation, just for packaging our dev tools.
   "--privileged"
 
-  # Run the docker script with the user id. Because the docker image gets to
-  # write in ${PWD} you typically want this to be your user id.
-  # To allow docker in docker, we need to use docker gid on the host.
-  "--user" "${user_uid}:${docker_gid}"
-
-  # Pass down the USER.
-  "--env" "USER=${user_name}"
-
   # Mount the project directory inside the Docker container.
   "--volume" "${PROJECT_ROOT}:${TRAMPOLINE_WORKSPACE}"
   "--workdir" "${TRAMPOLINE_WORKSPACE}"
@@ -430,6 +425,20 @@ docker_flags=(
   "--volume" "${KOKORO_KEYSTORE_DIR:-/dev/shm}:/secrets/keystore"
   "--env" "KOKORO_KEYSTORE_DIR=/secrets/keystore"
 )
+
+# If TRAMPOLINE_SKIP_USER is set, then do not override the user we run as
+if [[ -z "${TRAMPOLINE_SKIP_USER}" ]]
+then
+    docker_flags+=(
+        # Run the docker script with the user id. Because the docker image gets to
+        # write in ${PWD} you typically want this to be your user id.
+        # To allow docker in docker, we need to use docker gid on the host.
+        "--user" "${user_uid}:${docker_gid}"
+
+        # Pass down the USER.
+        "--env" "USER=${user_name}"
+    )
+fi
 
 # Add an option for nicer output if the build gets a tty.
 if [[ -t 0 ]]; then
