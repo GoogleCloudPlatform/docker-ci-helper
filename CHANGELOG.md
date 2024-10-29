@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/GoogleCloudPlatform/docker-ci-helper/compare/v2.0.11...v2.1.0) (2024-10-29)
+
+
+### Features
+
+* allow skipping user/group override ([#55](https://github.com/GoogleCloudPlatform/docker-ci-helper/issues/55)) ([3de17dd](https://github.com/GoogleCloudPlatform/docker-ci-helper/commit/3de17ddbf47e596c34fc751669843c66b4f884dd))
+
 ## [2.0.11](https://github.com/GoogleCloudPlatform/docker-ci-helper/compare/v2.0.10...v2.0.11) (2024-08-22)
 
 
