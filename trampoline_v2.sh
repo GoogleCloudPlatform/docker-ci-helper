@@ -171,6 +171,7 @@ if [[ -n "${KOKORO_BUILD_ID:-}" ]]; then
     "KOKORO_GITHUB_COMMIT_URL"
     "KOKORO_GITHUB_PULL_REQUEST_URL"
     "KOKORO_BUILD_ARTIFACTS_SUBDIR"
+    "KOKORO_ARTIFACTS_DIR"
   )
 elif [[ "${TRAVIS:-}" == "true" ]]; then
   RUNNING_IN_CI="true"
