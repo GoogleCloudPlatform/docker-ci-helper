@@ -56,6 +56,7 @@ set -euo pipefail
 # x-release-please-start-version
 TRAMPOLINE_VERSION="2.0.11"
 # x-release-please-end
+CURRENT_DIR=$(dirname "${BASH_SOURCE[0]}")
 
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
@@ -281,8 +282,14 @@ required_envvars=(
   "TRAMPOLINE_BUILD_FILE"
 )
 
+# Load additional trampoline configuration from PROJECT_ROOT
 if [[ -f "${PROJECT_ROOT}/.trampolinerc" ]]; then
   source "${PROJECT_ROOT}/.trampolinerc"
+fi
+
+# Load additional trampoline configuration from shared directory
+if [[ "${CURRENT_DIR}" != "${PROJECT_ROOT}" && -f "${CURRENT_DIR}/.trampolinerc" ]]; then
+  source "${CURRENT_DIR}/.trampolinerc"
 fi
 
 log_yellow "Checking environment variables."
