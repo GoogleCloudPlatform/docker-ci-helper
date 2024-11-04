@@ -54,7 +54,7 @@
 set -euo pipefail
 
 # x-release-please-start-version
-TRAMPOLINE_VERSION="2.1.0"
+TRAMPOLINE_VERSION="2.1.1"
 # x-release-please-end
 CURRENT_DIR=$(dirname "${BASH_SOURCE[0]}")
 
