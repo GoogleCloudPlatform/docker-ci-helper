@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/GoogleCloudPlatform/docker-ci-helper/compare/v2.1.0...v2.1.1) (2024-11-04)
+
+
+### Bug Fixes
+
+* add KOKORO_ARTIFACTS_DIR to the default list of env vars ([#58](https://github.com/GoogleCloudPlatform/docker-ci-helper/issues/58)) ([e68e88a](https://github.com/GoogleCloudPlatform/docker-ci-helper/commit/e68e88ae6980b60fdda724b398596dea805afd02))
+
 ## [2.1.0](https://github.com/GoogleCloudPlatform/docker-ci-helper/compare/v2.0.11...v2.1.0) (2024-11-04)
 
 
