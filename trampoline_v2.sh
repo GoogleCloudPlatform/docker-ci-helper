@@ -302,9 +302,12 @@ do
   fi
 done
 
-# We want to support legacy style TRAMPOLINE_BUILD_FILE used with V1
-# script: e.g. "github/repo-name/.kokoro/run_tests.sh"
-TRAMPOLINE_BUILD_FILE="${TRAMPOLINE_BUILD_FILE#github/*/}"
+if [[ ! -f "${TRAMPOLINE_BUILD_FILE}" ]]; then
+  # We want to support legacy style TRAMPOLINE_BUILD_FILE used with V1
+  # script: e.g. "github/repo-name/.kokoro/run_tests.sh"
+  log_yellow "TRAMPOLINE_BUILD_FILE is not found at provided path, stripping github and repo name."
+  TRAMPOLINE_BUILD_FILE="${TRAMPOLINE_BUILD_FILE#github/*/}"
+fi
 log_yellow "Using TRAMPOLINE_BUILD_FILE: ${TRAMPOLINE_BUILD_FILE}"
 
 # ignore error on docker operations and test execution
