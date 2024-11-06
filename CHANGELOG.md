@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/GoogleCloudPlatform/docker-ci-helper/compare/v2.1.2...v2.2.0) (2024-11-06)
+
+
+### Features
+
+* add TRAMPOLINE_CONFIG_DIR which can contain a .trampolinerc ([#63](https://github.com/GoogleCloudPlatform/docker-ci-helper/issues/63)) ([0fd92a6](https://github.com/GoogleCloudPlatform/docker-ci-helper/commit/0fd92a6d2296b22f524f085c2170b86b50290764))
+
 ## [2.1.2](https://github.com/GoogleCloudPlatform/docker-ci-helper/compare/v2.1.1...v2.1.2) (2024-11-06)
 
 
