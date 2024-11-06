@@ -293,6 +293,11 @@ if [[ "${CURRENT_DIR}" != "${PROJECT_ROOT}" && -f "${CURRENT_DIR}/.trampolinerc"
   source "${CURRENT_DIR}/.trampolinerc"
 fi
 
+# Allow specifying extra trampoline config directory
+if [[ ! -z "${TRAMPOLINE_CONFIG_DIR:}" && -f "${TRAMPOLINE_CONFIG_DIR}" ]]; then
+  source "${TRAMPOLINE_CONFIG_DIR}/.trampolinerc"
+fi
+
 log_yellow "Checking environment variables."
 for e in "${required_envvars[@]}"
 do
