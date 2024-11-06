@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/GoogleCloudPlatform/docker-ci-helper/compare/v2.1.1...v2.1.2) (2024-11-06)
+
+
+### Bug Fixes
+
+* only strip the github/repo-name prefix if the file doesn't exist ([#61](https://github.com/GoogleCloudPlatform/docker-ci-helper/issues/61)) ([5696833](https://github.com/GoogleCloudPlatform/docker-ci-helper/commit/56968339dfb9ac962ab6ce02ca5378672149fe7c))
+
 ## [2.1.1](https://github.com/GoogleCloudPlatform/docker-ci-helper/compare/v2.1.0...v2.1.1) (2024-11-04)
 
 
