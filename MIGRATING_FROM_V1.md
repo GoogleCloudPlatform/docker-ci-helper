@@ -116,7 +116,7 @@ For example, for our example repo, we needed to do the following:
 
 ```sh
 # Download the secret password into /dev/shm
-$ gsutil cp gs://cloud-devrel-kokoro-resources/getting-started-python/secrets-password.txt /dev/shm
+$ gcloud storage cp gs://cloud-devrel-kokoro-resources/getting-started-python/secrets-password.txt /dev/shm
 ```
 
 Then run the script:
