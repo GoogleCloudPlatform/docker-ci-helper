@@ -56,7 +56,7 @@ set -euo pipefail
 # x-release-please-start-version
 TRAMPOLINE_VERSION="2.2.0"
 # x-release-please-end
-CURRENT_DIR=$(dirname "${BASH_SOURCE[0]}")
+CURRENT_DIR=$(realpath $(dirname "${BASH_SOURCE[0]}"))
 
 if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
